@@ -1,4 +1,4 @@
-package com.cucu.ElearningAutoTest;
+package com.cucu.ElearningAutoTest.pages;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 @ExtendedCucumberOptions(jsonReport = "target/cucumber.json",
         jsonUsageReport = "target/cucumber-usage.json",
         retryCount = 0,
-        reportPrefix = "sample-prefix",
+        reportPrefix = "E-learning",
         overviewReport = true,
         coverageReport = true,
         featureOverviewChart = true,
@@ -23,7 +23,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(plugin = { "html:target/cucumber-html-report",
         "json:target/cucumber.json", "pretty:target/cucumber-pretty.txt",
         "usage:target/cucumber-usage.json", "junit:target/cucumber-results.xml" },
-        features = {"src/test/resources/features"},
-        tags = {"@base_flow"})
+        features = {"target/test-classes/features"},
+        tags = {"@knowledge_login"})
 public class BaseFlowTest {
 }

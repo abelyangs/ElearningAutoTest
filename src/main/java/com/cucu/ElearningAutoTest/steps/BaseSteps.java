@@ -1,16 +1,22 @@
-package com.cucu.ElearningAutoTest;
+package com.cucu.ElearningAutoTest.steps;
 
+import com.cucu.ElearningAutoTest.pages.BlogPage;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.openqa.selenium.support.PageFactory.initElements;
 
 public class BaseSteps implements En {
+
+    static Logger log = Logger.getLogger(BaseSteps.class);
 
     private WebDriver driver = new FirefoxDriver();
     private BlogPage blogPage = new BlogPage();
@@ -22,6 +28,8 @@ public class BaseSteps implements En {
 
     @When("^I click the search button$")
     public void clickSearchBtn () {
+        WebDriver.Timeouts timeouts = driver.manage().timeouts();
+        timeouts.pageLoadTimeout(10, TimeUnit.SECONDS);
         blogPage = initElements(driver, BlogPage.class);
         blogPage.clickSearchButton();
     }
