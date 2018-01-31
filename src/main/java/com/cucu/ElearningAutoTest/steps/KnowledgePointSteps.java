@@ -5,8 +5,6 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
 import static org.openqa.selenium.support.PageFactory.initElements;
@@ -16,18 +14,16 @@ import static org.openqa.selenium.support.PageFactory.initElements;
  */
 public class KnowledgePointSteps {
 
-    private WebDriver driver = new FirefoxDriver();
-
     private KnowledgePointPage knowledgePointPage =  new KnowledgePointPage();
 
     @Given("^I enter E-learning address \"([^\"]*)\"$")
     public void iEnterELearningAddress(String url) throws Throwable {
-        driver.get(url);
+        DriverManager.getCurrentDriver().get(url);
     }
 
     @And("^User enter the user name is \"([^\"]*)\"$")
     public void userEnterTheUserNameIs(String username) throws Throwable {
-        knowledgePointPage = initElements(driver, KnowledgePointPage.class);
+        knowledgePointPage = initElements(DriverManager.getCurrentDriver(), KnowledgePointPage.class);
         knowledgePointPage.inputUserName(username);
     }
 
@@ -43,6 +39,7 @@ public class KnowledgePointSteps {
 
     @When("^User click the knowledge menu btn$")
     public void userClickTheKnowledgeMenuBtn() throws Throwable {
+        Thread.sleep(2000);
         knowledgePointPage.clickKnowledgePointMenuBtn();
     }
 
@@ -66,7 +63,6 @@ public class KnowledgePointSteps {
 
     @And("^The table will populate the data for active type$")
     public void theTableWillPopulateTheDataForActiveType() throws Throwable {
-        Thread.sleep(3000);
-        driver.close();
+
     }
 }

@@ -1,43 +1,59 @@
 package com.cucu.ElearningAutoTest.steps;
 
-import org.apache.log4j.Logger;
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.UnreachableBrowserException;
+import org.testng.Assert;
 
-import java.util.concurrent.TimeUnit;
 /**
  * Created by Administrator on 2018/1/24.
  */
 public class DriverManager {
 
-    private static WebDriver driver;
-    static Logger log;
+    private static volatile WebDriver ydriver;
 
-    static {
-        log = Logger.getLogger(DriverManager.class);
-    }
-
-    public static WebDriver getDriver() {
-        if (driver.getWindowHandle() == null) {
-            log.info("Thread has no WedDriver, creating new one");
-            setWebDriver(driver);
+    public static WebDriver getCurrentDriver () throws InterruptedException {
+        if (DriverManager.ydriver == null) {
+            try {
+                createWebDriver();
+            } catch (Exception e) {
+                try{
+                    Thread.sleep(5000);
+                    System.out.println("second.....");
+                    createWebDriver();
+                }catch (Exception e2) {
+                    e2.printStackTrace();
+                    System.out.println("fail.....");
+                    Assert.fail();
+                }finally {
+                    Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+                        public void run () { close(); }
+                    }));
+                }
+        }finally{
+                Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+                    public void run () { close(); }
+                }));
+            }
         }
-        return driver;
+        return DriverManager.ydriver;
     }
 
-    public static void setWebDriver(WebDriver driver) {
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver  = new FirefoxDriver();
+    public static void createWebDriver () {
+        DriverManager.ydriver = new FirefoxDriver();
     }
 
-    public static String getBrowserInfo(){
-        log.debug("Getting browser info");
-        Capabilities cap = ((RemoteWebDriver) DriverManager.getDriver()).getCapabilities();
-        String b = cap.getBrowserName();
-        String os = cap.getPlatform().toString();
-        String v = cap.getVersion();
-        return String.format("%s v:%s %s", b, v, os);
+    public static void close () {
+        try {
+            if(DriverManager.ydriver != null) {
+                DriverManager.ydriver.close();
+                System.out.println("success");
+                DriverManager.ydriver.quit();
+                DriverManager.ydriver = null;
+            }
+        }catch (UnreachableBrowserException e) {
+            e.printStackTrace();
+        }
     }
+
 }

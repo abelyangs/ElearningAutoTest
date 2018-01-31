@@ -8,7 +8,6 @@ import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,20 +16,18 @@ import static org.openqa.selenium.support.PageFactory.initElements;
 public class BaseSteps implements En {
 
     static Logger log = Logger.getLogger(BaseSteps.class);
-
-    private WebDriver driver = new FirefoxDriver();
     private BlogPage blogPage = new BlogPage();
 
     @Given("^I enter my blog address \"([^\"]*)\" and go to Home page$")
-    public void goUrl (String url) {
-        driver.get(url);
+    public void goUrl (String url) throws Throwable {
+        DriverManager.getCurrentDriver().get(url);
     }
 
     @When("^I click the search button$")
-    public void clickSearchBtn () {
-        WebDriver.Timeouts timeouts = driver.manage().timeouts();
+    public void clickSearchBtn () throws InterruptedException {
+        WebDriver.Timeouts timeouts = DriverManager.getCurrentDriver().manage().timeouts();
         timeouts.pageLoadTimeout(10, TimeUnit.SECONDS);
-        blogPage = initElements(driver, BlogPage.class);
+        blogPage = initElements(DriverManager.getCurrentDriver(), BlogPage.class);
         blogPage.clickSearchButton();
     }
 

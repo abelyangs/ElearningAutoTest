@@ -13,6 +13,6 @@ Feature:
 
   Examples:
     |url|username|pwd|status|
-    |http://192.168.88.128:8081/service/manage/loginPage|123456|admin|Active|
-    |http://192.168.88.128:8081/service/manage/loginPage|123456|admin|Inactive|
+#    |http://192.168.88.128:8081/service/manage/loginPage|123456|admin|Active|
+ #   |http://192.168.88.128:8081/service/manage/loginPage|123456|admin|Inactive|
     |http://192.168.88.128:8081/service/manage/loginPage|123456|admin|All|
