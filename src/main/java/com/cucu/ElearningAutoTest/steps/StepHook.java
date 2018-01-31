@@ -21,4 +21,10 @@ public class StepHook {
             System.out.println(scenario.getName());
         }
     }
+
+    @After("@EL_login")
+    public void close_browser () throws InterruptedException {
+        Thread.sleep(3000);
+        DriverManager.close();
+    }
 }
