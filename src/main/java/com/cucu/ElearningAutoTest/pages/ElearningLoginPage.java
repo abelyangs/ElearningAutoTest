@@ -23,6 +23,11 @@ public class ElearningLoginPage {
 
     public static By by_elearningLogo = By.xpath("//span[text()='E-learning']");
 
+    public static By by_right_icon = By.xpath("/html/body/div[1]/div/div/button");
+
+    @FindBy(xpath = "//a[text()='Logout']")
+    public static WebElement logoutButton;
+
     public void inputUserName(String userName){
         userNameBox.sendKeys(userName);
     }

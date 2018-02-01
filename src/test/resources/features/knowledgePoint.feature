@@ -2,7 +2,7 @@
 Feature:
 
   Scenario Outline:
-    Given I enter E-learning address "<url>"
+    Given Enter E-learning address "<url>"
     And   User enter the user name is "<username>"
     And   User enter the password is "<pwd>"
     And   User click the login button

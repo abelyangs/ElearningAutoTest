@@ -24,6 +24,6 @@ import org.junit.runner.RunWith;
         "json:target/cucumber.json", "pretty:target/cucumber-pretty.txt",
         "usage:target/cucumber-usage.json", "junit:target/cucumber-results.xml" },
         features = {"target/test-classes/features"},
-        tags = {"@EL_login"})
+        tags = {"@EL_login_logout,@knowledge_login"})
 public class BaseFlowTest {
 }

@@ -22,7 +22,7 @@ public class StepHook {
         }
     }
 
-    @After("@EL_login")
+    @After("@EL_login_logout")
     public void close_browser () throws InterruptedException {
         Thread.sleep(3000);
         DriverManager.close();
