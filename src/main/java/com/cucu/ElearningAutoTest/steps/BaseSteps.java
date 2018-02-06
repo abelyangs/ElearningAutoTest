@@ -1,5 +1,6 @@
 package com.cucu.ElearningAutoTest.steps;
 
+import com.cucu.ElearningAutoTest.common.CommFun;
 import com.cucu.ElearningAutoTest.pages.BlogPage;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -7,10 +8,10 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
 
-import java.util.concurrent.TimeUnit;
-
+import static com.cucu.ElearningAutoTest.pages.BlogPage.searchButton;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.support.PageFactory.initElements;
 
 public class BaseSteps implements En {
@@ -25,15 +26,15 @@ public class BaseSteps implements En {
 
     @When("^I click the search button$")
     public void clickSearchBtn () throws InterruptedException {
-        WebDriver.Timeouts timeouts = DriverManager.getCurrentDriver().manage().timeouts();
-        timeouts.pageLoadTimeout(10, TimeUnit.SECONDS);
         blogPage = initElements(DriverManager.getCurrentDriver(), BlogPage.class);
+        CommFun.waitElementClickable(DriverManager.getCurrentDriver(), searchButton);
         blogPage.clickSearchButton();
     }
 
     @And("^I enter \"([^\"]*)\" in the input field$")
-    public void enterSearchContent (String keyword) {
-        blogPage.inputSearchWording(keyword);
+    public void enterSearchContent (String field) {
+        blogPage.searchInput.clear();
+        blogPage.inputSearchWording(field);
     }
 
     @And("^I click the first result of search$")
@@ -43,10 +44,10 @@ public class BaseSteps implements En {
 
     @Then("^I go to the article page with title containing \"([^\"]*)\"$")
     public void goArticlePage (String keyword) {
-//        assertContainsIngoreCase(blogPage.getArticleTitle(), keyword);
+        assertContainsIngoreCase(blogPage.getArticleTitle(), keyword);
     }
 
-//    public static void assertContainsIngoreCase(String set, String subset) {
-//        assertThat(set.toLowerCase(), containsString(subset.toLowerCase()));
-//    }
+    public static void assertContainsIngoreCase(String set, String subset) {
+        assertThat(set.toLowerCase(), containsString(subset.toLowerCase()));
+    }
 }
